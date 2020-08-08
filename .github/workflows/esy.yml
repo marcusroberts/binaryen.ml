@@ -11,9 +11,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [windows-latest]
 
     steps:
+      - name: Env
+        shell: bash
+        run: |
+          ls /c/ProgramData/Chocolatey/bin/
+
+      - name: (Windows) Find msbuild
+        id: msbuild
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v1.0.1
+
+      # - name: (Windows) Setup env vars
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     echo "::set-env CI_PATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin;C:/msys64/mingw64/bin;C:/ProgramData/Chocolatey/bin;C:/Program Files/nodejs;/usr/local/bin;/usr/bin;/bin;/usr/sbin;/sbin;C:/windows/System32"
+      #     echo "::set-env ESY__GLOBAL_PATH=CI_PATH"
+
       - name: Setup node.js
         uses: actions/setup-node@v2.1.0
         with:
@@ -24,13 +40,20 @@ jobs:
       # It also adds `shx` globally for cross-platform shell commands
       - name: Setup environment
         run: |
-          npm i -g esy
+          npm i -g @esy-nightly/esy
           npm i -g shx
 
       - name: Checkout project
         uses: actions/checkout@v2
         with:
           submodules: 'recursive'
+
+      - name: CMake Binaryen
+        shell: bash
+        run: |
+          cd src/binaryen
+          cmake -G 'MSYS Makefiles' -DBUILD_STATIC_LIB=ON .
+          cmake --build .
 
       - name: Install local dependencies
         run: |
@@ -54,20 +77,24 @@ jobs:
         if: steps.esy-cache.outputs.cache-hit != 'true'
         run: |
           esy build-dependencies --release
+        env:
+          MSBUILD: ${{ steps.msbuild.outputs.msbuildPath }}
 
       - name: Build project in release
         run: |
-          esy build --release
+          esy build --release --verbose
 
       # Then build in non-release so we can test
       - name: Build dependencies
         if: steps.esy-cache.outputs.cache-hit != 'true'
         run: |
           esy build-dependencies
+        env:
+          MSBUILD: ${{ steps.msbuild.outputs.msbuildPath }}
 
       - name: Build project
         run: |
-          esy build
+          esy build --verbose
 
       # Re-export dependencies if anything has changed or if it is the first time
       - name: Build esy cache
