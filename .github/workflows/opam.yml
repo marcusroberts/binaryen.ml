@@ -2,6 +2,8 @@ name: Binaryen.ml - opam workflow
 on:
   - push
   - pull_request
+env:
+  SWITCH: "4.11.0+msvc64"
 
 jobs:
   build:
@@ -11,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        ocaml-version: [4.10.0, 4.09.1]
+        os: [windows-latest]
+        ocaml-version: [4.11.0]
 
     steps:
       - name: Checkout project
