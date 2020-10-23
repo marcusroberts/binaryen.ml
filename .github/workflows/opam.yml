@@ -2,8 +2,6 @@ name: Binaryen.ml - opam workflow
 on:
   - push
   - pull_request
-env:
-  SWITCH: "4.11.0+msvc64"
 
 jobs:
   build:
@@ -14,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        ocaml-version: [4.11.0]
+        ocaml-version: [4.11.0+msvc64]
 
     steps:
       - name: Checkout project
@@ -22,8 +20,13 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Enable/config MSVC environment (if/when needed)
+        uses: ilammy/msvc-dev-cmd@v1.4.1
+        with:
+          arch: "x64"
+
       - name: Setup OCaml ${{ matrix.ocaml-version }}
-        uses: avsm/setup-ocaml@v1
+        uses: CICD-tools/ghactions-ocaml.toolchain@e397aa8051bc252dd97672104305127a22cc91db
         with:
           ocaml-version: ${{ matrix.ocaml-version }}
 
