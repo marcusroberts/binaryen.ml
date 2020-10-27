@@ -6,21 +6,31 @@
  (targets libbinaryen.a)
  (action
   (no-infer
-   (copy binaryen/lib/libbinaryen.a libbinaryen.a))))
+   (progn
+    (chdir
+     binaryen
+     (progn
+      (run cmake -S . -D CMAKE_BUILD_TYPE=Release -D BUILD_STATIC_LIB=ON)
+      (run cmake --build . --config Release)))
+    (copy binaryen/lib/libbinaryen.a libbinaryen.a)))))
 
 (rule
  (deps libbinaryen.a)
  (targets dllbinaryen.so)
  (action
   (no-infer
-   (run %{cc} -shared -o dllbinaryen.so libbinaryen.a -lstdc++))))
+   (progn
+    (chdir
+     binaryen/lib
+     (run %{cc} -shared -o dllbinaryen.so libbinaryen.a -lstdc++))
+    (copy binaryen/lib/dllbinaryen.so dllbinaryen.so)))))
 
-(rule
- (deps libbinaryen.a)
- (targets dllbinaryen.dll)
- (action
-  (no-infer
-   (run %{cc} -shared -o dllbinaryen.dll libbinaryen.a -lstdc++))))
+; (rule
+;  (deps libbinaryen.a)
+;  (targets dllbinaryen.dll)
+;  (action
+;   (no-infer
+;    (run %{cc} -shared -o dllbinaryen.dll libbinaryen.a -lstdc++))))
 
 (library
  (name binaryen_native)

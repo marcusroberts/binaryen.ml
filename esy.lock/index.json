@@ -1,5 +1,5 @@
 {
-  "checksum": "9a1ff8d51373ba83ead8ba33008fe3e0",
+  "checksum": "b30c27371710e9a8eca0cc6cbd711434",
   "root": "@grain/binaryen.ml@link-dev:./package.json",
   "node": {
     "ocaml@4.11.1000@d41d8cd9": {
@@ -77,6 +77,22 @@
         "type": "install",
         "source": [
           "github:esy-ocaml/libffi#599bc3567ecf839240977b6d9aaf0b80f983b5aa"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [],
+      "devDependencies": []
+    },
+    "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9": {
+      "id":
+        "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9",
+      "name": "esy-cmake",
+      "version":
+        "github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096",
+      "source": {
+        "type": "install",
+        "source": [
+          "github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096"
         ]
       },
       "overrides": [],
@@ -1257,6 +1273,7 @@
       "dependencies": [
         "ocaml@4.11.1000@d41d8cd9",
         "esy-python@github:esy-packages/esy-python#53918f6447633d149ca59329474714c50bf729c4@d41d8cd9",
+        "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9",
         "@opam/js_of_ocaml-ppx@opam:3.7.1@3ccee255",
         "@opam/js_of_ocaml@opam:3.7.1@772dec7c",
         "@opam/dune@opam:2.7.1@f5f493bc"
