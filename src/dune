@@ -1,29 +1,38 @@
-(data_only_dirs binaryen)
+; (subdir
+;  binaryen/third_party/llvm_project
+;  (include_subdirs unqualified))
 
-(rule
- (deps
-  (source_tree binaryen))
- (targets libbinaryen.a)
- (action
-  (no-infer
-   (progn
-    (chdir
-     binaryen
-     (progn
-      (run cmake -D BUILD_STATIC_LIB=ON .)
-      (run cmake --build .)))
-    (copy binaryen/lib/libbinaryen.a libbinaryen.a)))))
+; (subdir
+;  binaryen/third_party/llvm_project
+;  (foreign_library
+;   (archive_name llvm_project)
+;   (language cxx)
+;   (names :standard)
+;   (flags -D_GNU_SOURCE -D_DEBUG -D__STDC_CONSTANT_MACROS
+;     -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -DBUILD_LLVM_DWARF
+;     -std=c++14 -Wall -Wextra -Wno-unused-parameter
+;     -Wno-implicit-int-float-conversion -Wno-unknown-warning-option -Wswitch)))
 
-(rule
- (deps libbinaryen.a)
- (targets dllbinaryen.so)
- (action
-  (no-infer
-   (progn
-    (chdir
-     binaryen/lib
-     (run gcc -shared -o dllbinaryen.so libbinaryen.a -lstdc++))
-    (copy binaryen/lib/dllbinaryen.so dllbinaryen.so)))))
+(subdir
+ binaryen
+ (dirs src)
+ (include_subdirs unqualified)
+ (subdir
+  src
+  (rule
+   (action
+    (with-stdout-to
+     config.h
+     (echo "#define PROJECT_VERSION \"98 (version_98-81-g9170b2376)\"")))))
+ (foreign_library
+  (archive_name binaryen)
+  (language cxx)
+  (names :standard)
+  (include_dirs src third_party/llvm-project/include)
+  (flags -D_GNU_SOURCE -D_DEBUG -D__STDC_CONSTANT_MACROS
+    -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -DBUILD_LLVM_DWARF
+    -std=c++14 -Wall -Wextra -Wno-unused-parameter
+    -Wno-implicit-int-float-conversion -Wno-unknown-warning-option -Wswitch)))
 
 (library
  (name binaryen_native)
@@ -37,6 +46,40 @@
     binaryen_stubs_function_tables binaryen_stubs_memory
     binaryen_stubs_features binaryen_stubs_modules ocaml_helpers)
   (include_dirs binaryen/src)
-  (flags -O2 -Wall -Wextra))
- (foreign_archives binaryen)
+  (flags -std=c11 -O2 -Wall -Wextra))
+ (foreign_archives binaryen/binaryen)
  (c_library_flags -lstdc++ -lpthread))
+
+;  (names asm_v_wasm asmangle shared-constants binaryen-c Relooper
+;    optimizer-shared parser simple_ast ExpressionAnalyzer
+;    ExpressionManipulator LocalGraph ReFinalize AlignmentLowering Asyncify
+;    AvoidReinterprets CoalesceLocals CodeFolding CodePushing ConstHoisting
+;    DWARFDump DataFlowOpts DeNaN DeadArgumentElimination DeadCodeElimination
+;    Directize DuplicateFunctionElimination DuplicateImportElimination
+;    ExtractFunction Flatten FuncCastEmulation I64ToI32Lowering Inlining
+;    InstrumentLocals InstrumentMemory LegalizeJSInterface LimitSegments
+;    LocalCSE LogExecution LoopInvariantCodeMotion MemoryPacking MergeBlocks
+;    MergeLocals Metrics MinifyImportsAndExports NameList NoExitRuntime
+;    OptimizeAddedConstants OptimizeInstructions PickLoadSigns
+;    PostAssemblyScript PostEmscripten Precompute Print PrintCallGraph
+;    PrintFeatures PrintFunctionMap ReReloop RedundantSetElimination
+;    RelooperJumpThreading RemoveImports RemoveMemory RemoveNonJSOps
+;    RemoveUnusedBrs RemoveUnusedModuleElements RemoveUnusedNames
+;    ReorderFunctions ReorderLocals RoundTrip SSAify SafeHeap SimplifyGlobals
+;    SimplifyLocals Souperify SpillPointers StackIR Strip StripTargetFeatures
+;    TrapMode Untee Vacuum pass archive bits colors debug-1 file path-1
+;    safe_integer threads utilities literal wasm-binary wasm-debug
+;    wasm-emscripten wasm-io wasm-s-parser wasm-stack wasm-type wasm-validator
+;    wasm Binary ConvertUTF DJB DWARFAbbreviationDeclaration
+;    DWARFAcceleratorTable DWARFAddressRange DWARFCompileUnit DWARFContext
+;    DWARFDataExtractor DWARFDebugAbbrev DWARFDebugAddr DWARFDebugArangeSet
+;    DWARFDebugAranges DWARFDebugFrame DWARFDebugInfoEntry DWARFDebugLine
+;    DWARFDebugLoc DWARFDebugMacro DWARFDebugPubTable DWARFDebugRangeList
+;    DWARFDebugRnglists DWARFDie DWARFEmitter DWARFExpression DWARFFormValue
+;    DWARFGdbIndex DWARFListTable DWARFTypeUnit DWARFUnit DWARFUnitIndex
+;    DWARFVerifier DWARFVisitor DWARFYAML DataExtractor Debug Dwarf Error
+;    ErrorHandling FormatVariadic Hashing LEB128 LineIterator MCRegisterInfo
+;    MD5 MemoryBuffer NativeFormatting ObjectFile Optional Path ScopedPrinter
+;    SmallVector SourceMgr StringMap StringRef SymbolicFile Twine
+;    UnicodeCaseFold WithColor YAMLParser YAMLTraits dwarf2yaml obj2yaml_Error
+;    raw_ostream)
