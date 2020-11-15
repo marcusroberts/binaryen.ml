@@ -3,6 +3,20 @@
 (rule
  (deps
   (source_tree binaryen))
+ (targets dllbinaryen.dll)
+ (action
+  (no-infer
+   (progn
+    (chdir
+     binaryen
+     (progn
+      (run cmake -S . -G "MSYS Makefiles" -DBUILD_STATIC_LIB=OFF)
+      (run cmake --build .)))
+    (copy binaryen/bin/libbinaryen.dll dllbinaryen.dll)))))
+
+(rule
+ (deps
+  (source_tree binaryen))
  (targets libbinaryen.a)
  (action
   (no-infer
@@ -10,7 +24,7 @@
     (chdir
      binaryen
      (progn
-      (run cmake -D BUILD_STATIC_LIB=ON .)
+      (run cmake -S . -G "MSYS Makefiles" -DBUILD_STATIC_LIB=ON)
       (run cmake --build .)))
     (copy binaryen/lib/libbinaryen.a libbinaryen.a)))))
 

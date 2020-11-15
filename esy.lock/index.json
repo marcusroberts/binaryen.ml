@@ -1,5 +1,5 @@
 {
-  "checksum": "4dca20522cd7f4880200c52bfa8b8d32",
+  "checksum": "1c73029f54249e1c838c071be7b619ee",
   "root": "@grain/binaryen.ml@link-dev:./package.json",
   "node": {
     "ocaml@4.11.1000@d41d8cd9": {
@@ -32,16 +32,16 @@
       "dependencies": [],
       "devDependencies": []
     },
-    "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9": {
+    "esy-cmake@github:Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506@d41d8cd9": {
       "id":
-        "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9",
+        "esy-cmake@github:Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506@d41d8cd9",
       "name": "esy-cmake",
       "version":
-        "github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096",
+        "github:Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506",
       "source": {
         "type": "install",
         "source": [
-          "github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096"
+          "github:Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506"
         ]
       },
       "overrides": [],
@@ -1243,7 +1243,7 @@
       "overrides": [],
       "dependencies": [
         "ocaml@4.11.1000@d41d8cd9",
-        "esy-cmake@github:esy-packages/esy-cmake#d3e4fb29ca3e01c13f62c8ca8af061ea976b6096@d41d8cd9",
+        "esy-cmake@github:Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506@d41d8cd9",
         "@opam/js_of_ocaml-ppx@opam:3.8.0@aad62e50",
         "@opam/js_of_ocaml@opam:3.8.0@c897ffea",
         "@opam/dune@opam:2.7.1@f5f493bc"
