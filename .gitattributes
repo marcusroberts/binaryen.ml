@@ -3,4 +3,8 @@
 yarn.lock       export-ignore
 package.json    export-ignore
 
-* text eol=lf
+*.sh text eol=lf
+*.ml text eol=lf
+*.mli text eol=lf
+*.c text eol=lf
+*.h text eol=lf
