@@ -8,8 +8,7 @@
     "ocaml": "^4.9.0",
     "@opam/dune": "^2.7.1",
     "@opam/js_of_ocaml": "^3.6.0",
-    "@opam/js_of_ocaml-ppx": "^3.6.0",
-    "esy-cmake": "Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506"
+    "@opam/js_of_ocaml-ppx": "^3.6.0"
   },
   "devDependencies": {
     "@opam/js_of_ocaml-compiler": "^3.6.0",
