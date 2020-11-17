@@ -9,8 +9,7 @@
     "@opam/dune": "^2.7.1",
     "@opam/js_of_ocaml": "^3.6.0",
     "@opam/js_of_ocaml-ppx": "^3.6.0",
-    "esy-cmake": "Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506",
-    "esy-python": "esy-packages/esy-python#53918f6447633d149ca59329474714c50bf729c4"
+    "esy-cmake": "Et7f3/esy-cmake-1#36f9dae25d70cd545249d277f731550780bf9506"
   },
   "devDependencies": {
     "@opam/js_of_ocaml-compiler": "^3.6.0",
@@ -19,6 +18,11 @@
   },
   "esy": {
     "build": [
+      [
+        "bash",
+        "-c",
+        "#{os == 'windows' ? './windows-setup.sh' : './setup.sh'}"
+      ],
       "dune build -p binaryen --no-buffer"
     ],
     "buildEnv": {
