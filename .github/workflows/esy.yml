@@ -16,6 +16,7 @@ jobs:
     steps:
       - name: Env
         run: |
+          git config --system core.autocrlf input
           git config --system --list
 
       - name: Setup node.js
