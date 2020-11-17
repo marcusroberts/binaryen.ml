@@ -1,4 +1,3 @@
 ROOT="$(cygpath -m /)"
 LOCAL_PACKAGE_DIR="$(cygpath -w /var/cache/setup)"
-
-/setup-x86_64.exe --root $ROOT -q --packages=python3 --local-package-dir $LOCAL_PACKAGE_DIR --site=http://cygwin.mirror.constant.com/ --no-desktop --no-startmenu --no-shortcuts --quiet-mode
+/setup-x86_64.exe --root $ROOT -q --packages=python3 --local-package-dir $LOCAL_PACKAGE_DIR --site=http://cygwin.mirror.constant.com/ --no-desktop --no-startmenu --no-shortcuts --quiet-mode --no-admin --upgrade-also
