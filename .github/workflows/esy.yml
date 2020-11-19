@@ -30,7 +30,8 @@ jobs:
       - name: Workaround esy-bash
         run: |
           npm explore -g esy -- npm rm esy-bash
-          npm explore -g esy -- npm i https://github.com/phated/esy-bash/releases/download/hack/esy-bash-0.3.21.tgz
+          npm explore -g esy -- curl https://github.com/phated/esy-bash/releases/download/v0.3.21/esy-bash-0.3.21.tgz -O esy-bash-0.3.21.tgz -UseBasicParsing
+          npm explore -g esy -- npm i ./esy-bash-0.3.21.tgz
 
       - name: Checkout project
         uses: actions/checkout@v2
