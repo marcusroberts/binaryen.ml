@@ -27,6 +27,13 @@ jobs:
           npm i -g esy
           npm i -g shx
 
+      - name: Workaround esy-bash
+        run: |
+          npm explore -g esy
+          npm rm esy-bash
+          npm i https://github.com/phated/esy-bash/releases/download/hack/esy-bash-0.3.21.tgz
+          exit
+
       - name: Checkout project
         uses: actions/checkout@v2
         with:
