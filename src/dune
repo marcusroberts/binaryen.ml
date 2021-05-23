@@ -13,6 +13,7 @@
  (foreign_archives binaryen)
  (library_flags
   (:include ./config/library_flags.sexp))
+ (flags -ccopt -static)
  (c_library_flags -lstdc++ -lpthread))
 
 (rule
