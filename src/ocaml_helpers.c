@@ -7,13 +7,13 @@
 #include "ocaml_helpers.h"
 
 
-CAMLprim value
-caml_alloc_some(value v) {
-  CAMLparam1(v);
-  value some = caml_alloc_small(1, 0);
-  Store_field(some, 0, v);
-  CAMLreturn(some);
-}
+// CAMLprim value
+// caml_alloc_some(value v) {
+//   CAMLparam1(v);
+//   value some = caml_alloc_small(1, 0);
+//   Store_field(some, 0, v);
+//   CAMLreturn(some);
+// }
 
 CAMLprim value
 array_of_list(value list) {
